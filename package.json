@@ -19,9 +19,12 @@
     "antd": "^5.10.3",
     "date-fns": "^2.30.0",
     "date-fns-jalali": "^2.30.0-0",
+    "firebase": "^10.6.0",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.291.0",
     "next": "14.0.1",
+    "next-auth": "^4.24.5",
+    "otp-input-react": "^0.3.0",
     "react": "^18",
     "react-date-picker": "^10.5.2",
     "react-dom": "^18",
@@ -29,6 +32,8 @@
     "react-icons": "^4.11.0",
     "react-intersection-observer": "^9.5.2",
     "react-multi-date-picker": "^4.4.1",
+    "react-phone-input-2": "^2.15.1",
+    "sonner": "^1.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
