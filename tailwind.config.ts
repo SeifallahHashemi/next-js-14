@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import withMT from "@material-tailwind/react/utils/withMT";
 
 const config: Config = {
   content: [
@@ -22,9 +23,10 @@ const config: Config = {
       },
     },
     container: {
-      center: true
+      center: true,
     }
   },
-  plugins: [require('@tailwindcss/forms')]
+  plugins: [require('@tailwindcss/forms')],
+  darkMode: 'class'
 }
-export default config
+export default withMT(config);

@@ -1,3 +1,7 @@
 {
+  "experimentalTernaries": true,
+  "jsxSingleQuote": true,
+  "singleQuote": true,
+  "proseWrap": "always",
   "plugins": ["prettier-plugin-tailwindcss"]
 }

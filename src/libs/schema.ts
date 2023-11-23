@@ -9,4 +9,19 @@ export const FormDataSchema = z.object({
   city: z.string().min(1, 'City is required'),
   state: z.string().min(1, 'State is required'),
   zip: z.string().min(1, 'Zip is required')
+});
+
+export const NewFormDataSchema = z.object({
+  name: z.string(),
+  message: z
+    .string()
+    .min(6, { message: 'Message must be at least 6 characters.' })
+})
+
+export const ContactFormSchema = z.object({
+  name: z.string(),
+  email: z.string().email('Invalid email.'),
+  message: z
+    .string()
+    .min(6, { message: 'Message must be at least 6 characters.' })
 })

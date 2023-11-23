@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 /* Styles */
+/*
 .react-tel {
     @apply !w-full py-6 !text-base;
 }
@@ -13,3 +14,10 @@
 .otp-container input {
         @apply !mr-0 flex-1 py-5 outline-none !text-black dark:text-black;
 }
+.bg-animation {
+    @apply transition-colors duration-500;
+}
+body {
+    @apply bg-zinc-900;
+}
+*/
