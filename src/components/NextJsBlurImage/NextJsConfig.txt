@@ -1,0 +1,19 @@
+1: convert from nextconfig.js to nextcnfig.mjs
+
+2: add this code to nextconfig.mjs
+
+/** @type {import('next').NextConfig} */
+import withPlaiceholder from "@plaiceholder/next"
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      }
+    ]
+  }
+}
+
+// module.exports = nextConfig
+export default withPlaiceholder(nextConfig);
