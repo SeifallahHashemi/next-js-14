@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Tab } from '@/hooks/use-tabs';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Tab } from "@/components/Animations/Animated-Tabs/vercel-animated-tabs/use-tabs";
 
 const transition = {
   type: 'tween',
@@ -16,7 +16,7 @@ type Props = {
   setSelectedTab: (input: [number, number]) => void;
 };
 
-const Tabs = ({
+const TabsContainer = ({
                 tabs,
                 selectedTabIndex,
                 setSelectedTab,
@@ -122,4 +122,4 @@ const Tabs = ({
   );
 };
 
-export const Framer = { Tabs };
+export const Framer = { TabsContainer };
