@@ -3,71 +3,261 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .wrapper {
+    --col-width: 130px;
+
+    @apply grid w-full gap-2 md:gap-4;
+    grid-template-columns:
+      [full-start]
+      minmax(0, 100%)
+      [wide-start]
+      repeat(2, minmax(0, var(--col-width)))
+      [narrow-start]
+      repeat(8, minmax(0, var(--col-width)))
+      [narrow-end]
+      repeat(2, minmax(0, var(--col-width)))
+      [wide-end]
+      minmax(0, 100%)
+      [full-end];
+  }
+
+  .circular-fadeout {
+    mask-image: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0) 75%
+    );
+    mask-size: cover;
+  }
+
+  .wrapper > * {
+    grid-column: wide;
+  }
+
+  .wrapper > .full-bleed {
+    grid-column: full;
+  }
+
+  @media (min-width: theme('screens.md')) {
+    .wrapper > * {
+      grid-column: narrow;
+    }
+  }
+
+  @keyframes fill-text {
+    to {
+      --progress: 100%;
+    }
+  }
+
+  @keyframes parallax-movement {
+    to {
+      transform: translateY(var(--movement));
+    }
+  }
+
+  /* The @property tells the browser what type this variable is,
+      a percentage in our case. If we would not add that here, the
+      browser would not be able to animate it from 0% to 100%.
+    */
+  @property --progress {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
+}
+
 @layer components {
-    .card--to-right {
-        transform: rotate3d(1, 12, -3, 18deg) translate3d(210px, 0px, 90px);
-    }
-    .card--to-left {
-        transform: rotate3d(1, 12, -3, -18deg) translate3d(-210px, 0px, 90px);
-    }
+  .lamp-container {
+    @apply relative flex rotate-180;
+    height: 480px;
+    contain: layout;
+  }
+  .lamp {
+    --background: 240 10% 3.9%;
+    --bottom: #4188e6;
+    width: 100%;
+    height: 400px;
+    position: relative;
+    margin-bottom: -400px;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    --first: conic-gradient(
+      from 90deg at 80% 50%,
+      hsl(var(--background)),
+      hsl(var(--background)),
+      var(--bottom)
+    );
+    --second: conic-gradient(
+      from 270deg at 20% 50%,
+      var(--bottom),
+      hsl(var(--background)),
+      hsl(var(--background))
+    );
+    -webkit-mask-image: radial-gradient(
+      100% 50% at center center,
+      #000,
+      transparent
+    );
+    background-image: var(--first), var(--second);
+    background-position-x: 1%, 99%;
+    background-position-y: 0, 0;
+    background-size:
+      50% 100%,
+      50% 100%;
+    opacity: 1;
+    transform-origin: center center;
+    background-repeat: no-repeat;
+  }
+  .lamp:after {
+    content: '';
+    position: absolute;
+    inset: 0 0 50%;
+    overflow: hidden;
+    opacity: 0.1;
+    -webkit-mask-image: radial-gradient(
+      140px 50% at 50% 100%,
+      #000,
+      transparent
+    );
+    mask-image: radial-gradient(140px 50% at 50% 100%, #000, transparent);
+  }
+  .card--to-right {
+    transform: rotate3d(1, 12, -3, 18deg) translate3d(210px, 0px, 90px);
+  }
+  .card--to-left {
+    transform: rotate3d(1, 12, -3, -18deg) translate3d(-210px, 0px, 90px);
+  }
 
-    .blob-left {
-        @apply after:absolute after:right-0 after:top-[-5%]
+  .card,
+  .triangles,
+  .iconContainer {
+    backdrop-filter: blur(25px) saturate(123%);
+    -webkit-backdrop-filter: blur(25px) saturate(123%);
+    background-color: rgba(8, 1, 42, 0.14);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  .triangle {
+    /*clip-path: polygon(50% 50%, 100% 50%, 50% 0, 0 50%);*/
+    border-top: 1px solid rgba(255, 255, 255, 0.125);
+    border-left: 1px solid rgba(255, 255, 255, 0.125);
+    backdrop-filter: blur(25px) saturate(123%);
+    -webkit-backdrop-filter: blur(25px) saturate(123%);
+    background-color: rgba(8, 1, 42, 0.14);
+  }
+  .iconContainer {
+    /*-webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, red 0 -18px 40px, 5px 5px 15px 5px rgba(0,0,0,0);
+        box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, red 0 -18px 40px, 5px 5px 15px 5px rgba(0,0,0,0);*/
+    box-shadow:
+      inset 0 0 5px #025b98,
+      0 0 10px #025b98;
+  }
+
+  .blob-left {
+    @apply after:absolute after:right-0 after:top-[-5%]
         after:h-[110%] after:w-[50%] after:origin-right
-        after:scale-x-0 after:rounded-l-[100%] after:bg-yellow-400
-        after:transition-transform after:duration-1000 after:ease-out hover:after:scale-x-100;
-    }
+        after:rounded-l-[100%] after:bg-yellow-400 after:transition-transform
+        after:duration-1000 after:ease-out after:scale-x-0 hover:after:scale-x-100;
+  }
 
-    .blob-right {
-        @apply after:absolute after:left-0 after:top-[-5%]
+  .blob-right {
+    @apply after:absolute after:left-0 after:top-[-5%]
         after:h-[110%] after:w-[50%] after:origin-left
-        after:scale-x-0 after:rounded-r-[100%] after:bg-[rgba(255,255,255,.3)]
-        after:transition-transform after:duration-1000 after:ease-out hover:after:scale-x-100;
-    }
+        after:rounded-r-[100%] after:bg-[rgba(255,255,255,.3)] after:transition-transform
+        after:duration-1000 after:ease-out after:scale-x-0 hover:after:scale-x-100;
+  }
 
-    .button-underline {
-        @apply after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-[calc(100%+30px)]
-        after:translate-x-[--from] after:bg-current after:transition-transform
-        after:duration-500 after:ease-out group-hover:after:translate-x-[--to]
+  .button-underline {
+    @apply after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-[calc(100%+30px)]
+        after:bg-current after:transition-transform after:duration-500
+        after:ease-out after:translate-x-[--from] group-hover:after:translate-x-[--to]
         group-focus-visible:after:translate-x-[--to] md:after:h-[3px];
-    }
-    .hero-background {
-        background: linear-gradient(
-                to bottom,
-                #0f172a 100px,
-                transparent 100px,
-                transparent calc(80vh - 40px),
-                #0f172a calc(80vh - 40px)
-        ),
-        linear-gradient(
-                to right,
-                #0f172a 24px,
-                transparent 24px,
-                transparent calc(100% - 24px),
-                #0f172a calc(100% - 24px)
-        );
-    }
+  }
+  .hero-background {
+    background: linear-gradient(
+        to bottom,
+        #0f172a 100px,
+        transparent 100px,
+        transparent calc(80vh - 40px),
+        #0f172a calc(80vh - 40px)
+      ),
+      linear-gradient(
+        to right,
+        #0f172a 24px,
+        transparent 24px,
+        transparent calc(100% - 24px),
+        #0f172a calc(100% - 24px)
+      );
+  }
+  .window-mask {
+    /*-webkit-mask-image: linear-gradient(black, black), url(https://www.frontend.fyi/playground-assets/css-masks/window.svg);*/
+    mask-image: linear-gradient(black, black),
+      url(https://www.frontend.fyi/playground-assets/css-masks/window.svg);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size:
+      auto,
+      300px auto;
+    mask-size:
+      auto,
+      300px auto;
+    /*-webkit-mask-position: center center, center right 3rem;*/
+    mask-position:
+      center center,
+      center right 3rem;
+  }
+  @media (max-width: 768px) {
     .window-mask {
-        /*-webkit-mask-image: linear-gradient(black, black), url(https://www.frontend.fyi/playground-assets/css-masks/window.svg);*/
-        mask-image: linear-gradient(black, black), url(https://www.frontend.fyi/playground-assets/css-masks/window.svg);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-size: auto, 300px auto;
-        mask-size: auto, 300px auto;
-        /*-webkit-mask-position: center center, center right 3rem;*/
-        mask-position: center center, center right 3rem;
+      -webkit-mask-size:
+        auto,
+        150px auto;
+      mask-size:
+        auto,
+        150px auto;
+      /*-webkit-mask-position: center center, center bottom 1.5rem;*/
+      mask-position:
+        center center,
+        center bottom 1.5rem;
     }
-    @media (max-width: 768px) {
-        .window-mask {
-            -webkit-mask-size: auto, 150px auto;
-            mask-size: auto, 150px auto;
-            /*-webkit-mask-position: center center, center bottom 1.5rem;*/
-            mask-position: center center, center bottom 1.5rem;
-        }
-    }
+  }
+  .reveal-text {
+    --faded-color: #ccc;
+    --higlighted-color: #111;
+    /* Compared to the video, I updated this article to reflect
+           a solution that's so much easier. Creating a single gradient
+           with two colors, and then animating the starting/end point of
+           the two colors with a CSS variable --progress. CSS @property
+           makes this so much easier for us now.
+        */
+    --progress: 0%;
+    background-image: linear-gradient(
+      to right,
+      var(--higlighted-color),
+      var(--higlighted-color) var(--progress),
+      var(--faded-color) var(--progress),
+      var(--faded-color)
+    );
+    background-clip: text;
+    background-repeat: no-repeat;
+    color: transparent;
+    display: inline;
+    animation: fill-text linear both;
+    animation-timeline: --reveal-wrapper;
+    animation-range: entry 200% cover 80%;
+  }
 
+  .parallax-image {
+    transform: translateY(0px);
+    animation: parallax-movement linear both;
+    animation-timeline: --parallax-wrapper;
+    animation-range: entry 25% cover 80%;
+  }
 }
 /*main {
     background-image: url("./../../public/pattern.svg");
@@ -106,66 +296,66 @@
 
 /* Styles */
 .react-tel {
-    @apply !w-full py-6 !text-base;
+  @apply !w-full py-6 !text-base;
 }
 .otp-container {
-    @apply flex justify-between gap-2 text-black;
+  @apply flex justify-between gap-2 text-black;
 }
 .otp-container input {
-        @apply !mr-0 flex-1 py-5 outline-none !text-black dark:text-black;
+  @apply !mr-0 flex-1 py-5 !text-black outline-none dark:text-black;
 }
 .bg-animation {
-    @apply transition-colors duration-500;
+  @apply transition-colors duration-500;
 }
 
 /* animated navbar-one styles */
 .ts-bg {
-    background: rgba(246, 246, 246, 0.36);
-    mix-blend-mode: luminosity;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(67.95704650878906px);
+  background: rgba(246, 246, 246, 0.36);
+  mix-blend-mode: luminosity;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(67.95704650878906px);
 }
 
 .transparentContainer {
-    border: 1px solid #1a1a1a;
-    background: rgba(139, 139, 139, 0.192);
-    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px);
+  border: 1px solid #1a1a1a;
+  background: rgba(139, 139, 139, 0.192);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
 }
 
 .orbit-planet {
-    -webkit-animation: spin-right 20s linear infinite;
-    animation: spin-right 40s linear infinite;
-    border: 2px #ffffff32 solid;
+  -webkit-animation: spin-right 20s linear infinite;
+  animation: spin-right 40s linear infinite;
+  border: 2px #ffffff32 solid;
 }
 .planet {
-    animation: spin-up 50s linear infinite;
+  animation: spin-up 50s linear infinite;
 }
 /* ---------- Animation ---------- */
 @-webkit-keyframes spin-right {
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin-right {
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 @keyframes spin-up {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(-360deg);
-    }
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }

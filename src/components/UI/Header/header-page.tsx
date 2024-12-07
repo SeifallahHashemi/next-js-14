@@ -40,6 +40,16 @@ const HeaderPage = () => {
               Photos
             </Link>
           </NavbarItem>
+          <NavbarItem isActive>
+            <Link href="/transition-one" aria-current="page" color="secondary">
+              Transition One
+            </Link>
+          </NavbarItem>
+          <NavbarItem isActive>
+            <Link href="/transition-two" aria-current="page" color="secondary">
+              Transition Two
+            </Link>
+          </NavbarItem>
           <NavbarItem>
             <Link color="foreground" href="#">
               Integrations

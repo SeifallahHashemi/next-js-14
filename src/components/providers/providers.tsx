@@ -1,11 +1,15 @@
 'use client';
+
 import React from 'react';
-import { ConfigProvider, theme } from 'antd';
-import { StyleProvider } from '@ant-design/cssinjs';
+
 import TanStackQueryProviders from '@/utils/providers';
-import { Toaster } from 'sonner';
-import ThemeProvider from '@/components/providers/theme-provider';
+import { StyleProvider } from '@ant-design/cssinjs';
 import { NextUIProvider } from '@nextui-org/react';
+import { ConfigProvider, theme } from 'antd';
+import { IconContext } from 'react-icons';
+import { Toaster } from 'sonner';
+
+import ThemeProvider from '@/components/providers/theme-provider';
 
 const Providers = ({ children }: React.PropsWithChildren) => {
   return (
@@ -18,7 +22,9 @@ const Providers = ({ children }: React.PropsWithChildren) => {
               defaultTheme={'system'}
               enableSystem
             >
-              {children}
+              <IconContext.Provider value={{ size: '1.75em' }}>
+                {children}
+              </IconContext.Provider>
             </ThemeProvider>
           </NextUIProvider>
           <Toaster position='top-right' richColors expand closeButton />

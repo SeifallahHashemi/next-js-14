@@ -1,0 +1,16 @@
+.wrapper {
+    direction: rtl;
+}
+.products {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+.products__listItem {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
